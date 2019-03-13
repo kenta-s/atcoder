@@ -1,56 +1,23 @@
 A,B = gets.split.map(&:to_i)
-B.to_s(2)
+
+max_length = 50
+
 bit = ""
-B/2 + B/2
-100
-bits = []
+(0...max_length).each do |i|
+  num = 2**(max_length-i)
+  a = ((A)/num)*(num/2)
+  b = [((A) % num) - (num/2), 0].max
+  a_count = a+b
 
-(1..100).to_a.reverse.each do |i|
-  if 2**i > B
-    bits << 0
+  c = ((B+1)/num)*(num/2)
+  d = [((B+1) % num) - (num/2), 0].max
+  b_count = c+d
+  tmp = b_count - a_count
+  if tmp.odd?
+    bit << "1"
   else
-    bits << B / (2**i)
+    bit << "0"
   end
 end
 
-bits << B / 2
-
-# if A == 2
-#   bits_a = []
-#   (1..100).to_a.reverse.each do |i|
-#     bits_a << 0
-#   end
-#   
-#   bits_a << 0
-# else
-  bits_a = []
-  (1..100).to_a.reverse.each do |i|
-    if 2**i > (A)
-      bits_a << 0
-    else
-      bits_a << (A) / (2**i)
-    end
-  end
-  
-  bits_a << (A) / 2
-# end
-
-p bits
-p bits_a
-
-ans = ""
-b = []
-(0..100).to_a.each do |i|
-  if A == B
-    hoge = bits[i]
-  else
-    hoge = (bits[i] - bits_a[i])
-  end
-  if hoge.odd?
-    ans << "1"
-  else
-    ans << "0"
-  end
-end
-
-puts ans.to_i(2)
+puts bit.to_i(2)
