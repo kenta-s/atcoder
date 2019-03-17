@@ -1,8 +1,4 @@
-# h,w,k = gets.split.map(&:to_i)
-
-h = 2
-w = 4
-k = 3
+h,w,k = gets.split.map(&:to_i)
 
 def hoge(digit, from_w, to_w)
   from = ("0" * digit).to_i(2)
@@ -25,21 +21,28 @@ def hoge(digit, from_w, to_w)
   count
 end
 
-dp = Hash.new(Hash.new(0))
+dp = []
 
-(1..h+1).each do |i|
-  (w-1).times do |j|
-    puts "i: #{i}"
-    puts "j: #{j}"
-    if i == 1
-      dp[i][j] += hoge(h-1, 0, j)
+h.times do |i|
+  dp[i] ||= []
+  w.times do |j|
+    dp[i][j] ||= 0
+    if i == 0
+      dp[i][j] = hoge(w-1, 0, j)
     else
-      dp[i][j] += hoge(h-1, j-1, j) * dp[i-1][j-1]
-      dp[i][j] += hoge(h-1, j, j) * dp[i-1][j]
-      dp[i][j] += hoge(h-1, j+1, j) * dp[i-1][j+1]
+      if j == 0
+        dp[i][j] += (hoge(w-1, j, j) * (dp[i-1][j] || 0))
+        dp[i][j] += (hoge(w-1, j+1, j) * (dp[i-1][j+1] || 0))
+      elsif j == w
+        dp[i][j] += (hoge(w-1, j-1, j) * (dp[i-1][j-1] || 0))
+        dp[i][j] += (hoge(w-1, j, j) * (dp[i-1][j] || 0))
+      else
+        dp[i][j] += (hoge(w-1, j-1, j) * (dp[i-1][j-1] || 0))
+        dp[i][j] += (hoge(w-1, j, j) * (dp[i-1][j] || 0))
+        dp[i][j] += (hoge(w-1, j+1, j) * (dp[i-1][j+1] || 0))
+      end
     end
   end
 end
 
-require 'irb'
-binding.irb
+puts dp[-1][k-1] % 1000000007
