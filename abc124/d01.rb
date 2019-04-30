@@ -24,21 +24,18 @@ if tmp[-1][:type] == "0"
   tmp.push({val: 0, type: "1"})
 end
 
-if k.odd?
-  total = tmp[0, k+2].reduce(0) {|a,e| a+=e[:val]}
-else
-  total = tmp[0, k+3].reduce(0) {|a,e| a+=e[:val]}
-end
+take = k*2+1
+total = tmp[0, take].reduce(0) {|a,e| a+=e[:val]}
 
 ans = total
 
 2.step(tmp.size, 2) do |i|
   next if tmp[i-1].nil?
-  break if tmp[i+k+2].nil?
+  break if tmp[i+take-1].nil?
   total -= tmp[i-2][:val]
   total -= tmp[i-1][:val]
-  total += tmp[i+k+1][:val]
-  total += tmp[i+k+2][:val]
+  total += tmp[i+take-2][:val]
+  total += tmp[i+take-1][:val]
   ans = [ans, total].max
 end
 
