@@ -1,18 +1,24 @@
 n,k = gets.split.map(&:to_i)
 hs = gets.split.map(&:to_i)
 
-dp = {}
-dp[1] = 0
+# dp = Array.new(n, 0)
+dp = [0,0]
 
-n.times.with_index(1) do |_, i|
-  next if i == 1
+for i in 2..n
+  # dp[i] = dp[i-1] + (hs[i-2] - hs[i-1]).abs
+  # dp << dp[i-1] + (hs[i-2] - hs[i-1]).abs
   min = dp[i-1] + (hs[i-2] - hs[i-1]).abs
-  k.times.with_index(1) do |_, j|
-    if i > j
-      min = [min, dp[i-j] + (hs[i-j-1] - hs[i-1]).abs].min
+  for j in (1..[i-1,k].min)
+    tmp = dp[i-j] + (hs[i-j-1] - hs[i-1]).abs
+    # dp[i] = tmp if dp[i] > tmp
+    # if dp[i] > tmp
+    #   dp[i] = tmp
+    # end
+    if min > tmp
+      min = tmp
     end
   end
-  dp[i] = min
+  dp << min
 end
 
 puts dp[n]
