@@ -1,11 +1,16 @@
 n, k = gets.split.map(&:to_i)
 
-tmp = 0
-(1..n).each do |i|
-  if (i * 2) % k == 0
-    tmp += 1
+if k.odd?
+  puts (n / k) ** 3
+else
+  tmp1 = 0
+  tmp2 = 0
+  (1..n).each do |i|
+    if i % k == 0
+      tmp1 += 1
+    elsif (2 * i) % k == 0
+      tmp2 += 1
+    end
   end
+  puts (tmp1) ** 3 + ((tmp2) ** 3)
 end
-
-ans = tmp ** 3
-puts ans
