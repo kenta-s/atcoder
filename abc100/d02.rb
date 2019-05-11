@@ -9,18 +9,17 @@ ans = 0
 (0..("111".to_i(2))).each do |i|
   bit = i.to_s(2).rjust(3, "0")
   op = bit.gsub("0","-").gsub("1","+")
-  tmp = xyzs.sort_by do |xyz|
-    ["#{op[0]}#{xyz[0]}", "#{op[1]}#{xyz[1]}", "#{op[2]}#{xyz[2]}"]
-  end.reverse
+
+  tmp = xyzs.sort do |a,b|
+    aval = eval("#{op[0]}#{a[0]}#{op[1]}#{a[1]}#{op[2]}#{a[2]}")
+    bval = eval("#{op[0]}#{b[0]}#{op[1]}#{b[1]}#{op[2]}#{b[2]}")
+    bval <=> aval
+  end
+
   tmp = tmp.first(m)
   t = tmp.transpose.reduce(0) do |a,e|
     a += (e.reduce(0){|a2,e2| a2+=e2}).abs
   end
-  # p op
-  # if ans < t
-  #   p xyzs
-  #   p tmp
-  # end
   ans = [ans, t].max
 end
 
