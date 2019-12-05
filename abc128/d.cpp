@@ -43,7 +43,7 @@ int main(){
       }
       // cout << L << ',' << R << endl;
       // cout << "sum is " << sum << endl;
-      for(int o=0; o<(k - T); o++){
+      for(int o=0; o<k-T; o++){
         if(!que.empty()){
           // cout << "que.top is " << que.top() << endl;
           sum = sum - que.top();
