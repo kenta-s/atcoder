@@ -18,6 +18,10 @@ int main(){
   k = min(N, K);
   for(int i=0; i<k; i++){
     int T = k - i;
+    int Remain = i;
+    if(N < K){
+      Remain = Remain + K - N;
+    }
     // cout << "T is " << T << endl;
     for(int j=0; j<=T; j++){
       int L = T - j;
@@ -42,8 +46,10 @@ int main(){
         // cout << "l2 value is " << V[l] << endl;
       }
       // cout << L << ',' << R << endl;
+      // cout << "remain is " << Remain << endl;
       // cout << "sum is " << sum << endl;
-      for(int o=0; o<k-T; o++){
+      // for(int o=0; o<i; o++){
+      for(int o=Remain; o>0; o--){
         if(!que.empty()){
           // cout << "que.top is " << que.top() << endl;
           sum = sum - que.top();
