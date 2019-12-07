@@ -1,13 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
 
 using namespace std;
 int N;
 vector<int> W;
-int ans;
-map<int, int> mp;
+int ans = 300;
 
 int main(){
   cin >> N;
@@ -16,21 +14,16 @@ int main(){
     cin >> w;
     W.push_back(w);
   }
-  int sum = 0;
-  sort(W.begin(),W.end());
+  int sum,tmp = 0;
   for(int i=0; i<N; i++){
     sum = sum + W[i];
   }
   for(int i=0; i<N; i++){
-    if(i==0){
-      mp[i] = W[i];
-    }else{
-      mp[i] = W[i] + mp[i-1];
-    }
-  }
-  for(int i=0; i<N; i++){
-    int tmp = abs(sum - mp[i]);
-    ans = min(ans, tmp);
+    tmp = tmp + W[i];
+    int a = sum - tmp;
+    int b = sum - a;
+    int diff = abs(a - b);
+    ans = min(ans, diff);
   }
 
   cout << ans << endl;
