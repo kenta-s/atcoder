@@ -19,10 +19,13 @@ int main(){
     }
   }
 
+  int ans = 0;
+
   for(int i=0; i<=N; i++){
-    if(A[i] > X){
-      cout << i << endl;
-      break;
+    if(A[i] <= X){
+      ans = i;
     }
   }
+
+  cout << ans + 1 << endl;
 }
