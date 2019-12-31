@@ -14,7 +14,7 @@ ss.size.times do |i|
 end
 
 h.each do |k,v|
-  if v > 1
+  if v > 0
     ans += (1..v).to_a.combination(2).size
   else
     ans += v
