@@ -26,6 +26,11 @@ int main(){
   if(ceil(sqrt(N)) != floor(sqrt(N))) n--;
   n = floor(n);
 
+  if(n==0){
+    cout << N << endl;
+    exit(0);
+  }
+
   for(int i=1; i<=n; i++){
     long long tmp = N / i;
     if(i * tmp != N) continue;
