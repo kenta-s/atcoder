@@ -65,3 +65,18 @@ for( auto i = table.begin(); i != table.end() ; ++i ) {
 	cout << i->first << " " << i->second << "\n";
 }
 ```
+
+### setprecision
+
+```
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main(){
+  double ans = 10 / 3;
+  cout << fixed << setprecision(10) << ans << endl;
+  return 0;
+}
+```
