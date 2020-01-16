@@ -80,3 +80,93 @@ int main(){
   return 0;
 }
 ```
+
+### BFS for maze solving
+
+```
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+int N,M;
+vector<vector<char>> maze;
+vector<vector<bool>> visited;
+
+struct Position{
+  int i,j,depth;
+};
+
+// returns the cost of solving the maze
+int bfs(int i, int j){
+  queue<Position> que;
+  Position position = {i,j,0};
+  que.push(position);
+  visited[i][j] = true;
+  int result;
+  while(!que.empty()){
+    Position pos = que.front();
+    que.pop();
+    visited[pos.i][pos.j] = true;
+    if(maze[pos.i][pos.j] == 'G'){
+      result = pos.depth;
+      break;
+    }
+    if(pos.j != M - 1 && maze[pos.i][pos.j + 1] != '#' && !visited[pos.i][pos.j + 1]){
+      Position position = {pos.i, pos.j + 1, pos.depth+1};
+      que.push(position);
+    }
+    if(pos.j != 0 && maze[pos.i][pos.j - 1] != '#' && !visited[pos.i][pos.j - 1]){
+      Position position = {pos.i, pos.j - 1, pos.depth+1};
+      que.push(position);
+    }
+    if(pos.i != N - 1 && maze[pos.i + 1][pos.j] != '#' && !visited[pos.i + 1][pos.j]){
+      Position position = {pos.i + 1, pos.j, pos.depth+1};
+      que.push(position);
+    }
+    if(pos.i != 0 && maze[pos.i - 1][pos.j] != '#' && !visited[pos.i - 1][pos.j]){
+      Position position = {pos.i - 1, pos.j, pos.depth+1};
+      que.push(position);
+    }
+  }
+
+  return result;
+}
+
+int main(){
+  N = 3;
+  M = 3;
+  maze.resize(M, vector<char>(N));
+  visited.resize(M, vector<bool>(N));
+
+  // // S: Start
+  // // G: Goal
+  // // .: valid path.
+  // // #: Block. cannot go through
+  //
+  // S.#
+  // #..
+  // ..G
+  maze[0][0] = 'S';
+  maze[0][1] = '.';
+  maze[0][2] = '#';
+  maze[1][0] = '#';
+  maze[1][1] = '.';
+  maze[1][2] = '.';
+  maze[2][0] = '.';
+  maze[2][1] = '.';
+  maze[2][2] = 'G';
+
+  for(int i=0; i<3; i++){
+    for(int j=0; j<3; j++){
+      visited[i][j] = false;
+    }
+  }
+
+  // pass starting position
+  int ans = bfs(0, 0);
+  cout << ans << endl;
+  return 0;
+}
+```
