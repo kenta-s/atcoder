@@ -170,3 +170,11 @@ int main(){
   return 0;
 }
 ```
+
+### radian to degree
+
+```
+double degree = 180.0/3.141592653589793238463;
+double ans = atan(1/2);
+cout << ans * degree << endl;
+```
