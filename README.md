@@ -178,3 +178,20 @@ double degree = 180.0/3.141592653589793238463;
 double ans = atan(1/2);
 cout << ans * degree << endl;
 ```
+
+### power
+
+```
+#include <cmath>
+
+// 2^3
+pow(2, 3);
+```
+
+### sqrt
+
+```
+#include <cmath>
+
+sqrt(2);
+```
