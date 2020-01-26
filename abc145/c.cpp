@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <algorithm>
 #include <cmath>
@@ -21,41 +22,31 @@ int main(){
     xy[i].push_back(y);
   }
 
-  double tmp1 = 0;
-  for(int i=0; i<N-1; i++){
-    int x1 = xy[i][0];
-    int y1 = xy[i][1];
-    int x2 = xy[i+1][0];
-    int y2 = xy[i+1][1];
-
-    tmp1 += sqrt(pow((x1-x2), 2) + pow((y1-y2), 2));
-    // cout << "tmp1 is " << tmp1 << endl;
+  vector<int> v;
+  for(int i=0; i<N; i++){
+    v.push_back(i);
   }
+  double ans = 0;
+  // double ans = 0;
+  // double tmp = 0;
+  do {
+    double tmp = 0;
+    for(int i = 0; i<N-1; i++){
+      int x1 = xy[v[i]][0];
+      int x2 = xy[v[i+1]][0];
+      int y1 = xy[v[i]][1];
+      int y2 = xy[v[i+1]][1];
+      tmp += sqrt(((x1-x2) * (x1-x2)) + ((y1-y2) * (y1-y2)));
+      // cout << "i is " << i << endl;
+      // tmp += 1;
+      // cout << v[i];
+    }
+    ans += tmp;
+    // cout << "tmp is " << tmp << endl;
+  } while (next_permutation(v.begin(), v.end()));
 
-  // 2.41421
-
-  int x1 = xy[N-1][0];
-  int y1 = xy[N-1][1];
-  int x2 = xy[0][0];
-  int y2 = xy[0][1];
-
-  double tmp2 = sqrt(pow((x1-x2), 2) + pow((y1-y2), 2));
-
-  for(int i=0; i<N-2; i++){
-    int x1 = xy[i][0];
-    int y1 = xy[i][1];
-    int x2 = xy[i+1][0];
-    int y2 = xy[i+1][1];
-
-    tmp2 += sqrt(pow((x1-x2), 2) + pow((y1-y2), 2));
-  }
-
-  int fact = factorial(N);
-  int b = factorial(N-1);
-  int a = fact - b;
-
-  double ans = ((tmp1 * a) + (tmp2 * b)) / fact;
-  cout << ans << endl;
+  ans /= factorial(N);
+  cout << fixed << setprecision(10) << ans << endl;
 
   return 0;
 }
