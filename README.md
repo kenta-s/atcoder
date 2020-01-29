@@ -195,3 +195,20 @@ pow(2, 3);
 
 sqrt(2);
 ```
+
+### permutation
+
+```
+#include <algorithm>
+
+vector<int> v = {1,2,3};
+do {
+  cout << v[0] << v[1] << v[2] << endl;
+} while (next_permutation(v.begin(), v.end()));
+// 123
+// 132
+// 213
+// 231
+// 312
+// 321
+```
