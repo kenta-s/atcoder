@@ -221,3 +221,21 @@ vector<vector<int>> P = {
   {0,1}
 };
 ```
+
+### Check if a number is float or int
+
+```
+#include <cmath>
+
+if(floor(0.666) == ceil(0.666){
+  // int
+}else{
+  // float
+}
+```
+
+### Fermat's little theorem
+
+```
+a^p1 == 1 (mod p)
+```
