@@ -13,44 +13,32 @@ end
 
 ans = Float::INFINITY
 
-chars = ["A", "A", "B", "B", "X", "X", "Y", "Y"]
-max = 0
-max_str = ''
-(0..('1'*8).to_i(2)).each do |i|
-  bit1 = i.to_s(2).rjust(8, '0')
-  next if bit1.count('1') != 2
+candidates = ["A", "B", "X", "Y"]
 
-  (0..('1'*8).to_i(2)).each do |j|
+chars = []
+candidates.each do |c1|
+  candidates.each do |c2|
+    chars.push("#{c1}#{c2}")
+  end
+end
+chars.uniq!
+
+require 'irb'
+
+chars.each do |l|
+  chars.each do |r|
+    count = 0
     cs = tmp_cs
-    bit2 = j.to_s(2).rjust(8, '0')
-    next if bit2.count('1') != 2
-    next if bit1 == bit2
 
-    str1 = bit1.chars.map.with_index do |b, k|
-      if b == '1'
-        chars[k]
-      else
-        nil
-      end
-    end.compact.join
+    cs = cs.gsub(l, 'l')
+    cs = cs.gsub(r, 'r')
+    count += cs.count('l')
+    count += cs.count('r')
+    left_over = tmp_cs.length - count * 2
 
-    str2 = bit2.chars.map.with_index do |b, k|
-      if b == '1'
-        chars[k]
-      else
-        nil
-      end
-    end.compact.join
+    # binding.irb if l == "AA" && r == "BB"
 
-    # cnt1 = cs.scan(/#{str1}/).count
-    cs = cs.gsub(str1, '')
-    cnt1 = (tmp_cs.length - cs.length)/2
-    # cnt2 = cs.scan(/#{str2}/).count
-    cs2 = cs.gsub(str2, '')
-    cnt2 = (cs.length - cs2.length)/2
-
-    cnt = cnt1 + cnt2 + cs2.length
-    ans = [ans, cnt].min
+    ans = [ans, left_over + count].min
   end
 end
 
