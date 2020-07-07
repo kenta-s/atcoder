@@ -1,43 +1,58 @@
-# WIP
-class WarshallFloyd
-  attr_reader :d, :n
+n,x,y = gets.split.map(&:to_i)
 
-  # n: count of nodes
-  def initialize(n)
-    @n = n
-    @d = {}
-    (1..n).each do |i|
-      d[i] = Hash.new(Float::INFINITY)
-      d[i][i] = 0
-    end
-  end
+h = {}
+(n-1).times do |i|
+  h[i+1] ||= {}
+  h[i+1][i+2] = 1
+end
 
-  def add_side(side, cost)
-    a, b = side
-    d[a][b] = cost
-    d[b][a] = cost
-  end
+h[x][y] = 1
 
-  def calc_shortest_paths
-    (1..n).each do |k|
-      (1..n).each do |i|
-        (1..n).each do |j|
-          d[i][j] = [d[i][j], d[i][k] + d[k][j]].min
+q = []
+q.push([1, 2])
+
+visited = {}
+
+while !q.empty?
+  prev, current = q.shift
+  visited[prev] ||= {}
+  visited[prev][current] = true
+  h[prev][current] = [h[prev][current], 1].min
+
+  (1..current-1).each do |i|
+    if current == 1
+    else
+      if h[i][prev].nil?
+      else
+        if h[i][current]
+          h[i][current] = [h[i][prev] + 1, h[i][current]].min
+        else
+          h[i][current] = h[i][prev] + 1
         end
       end
     end
   end
+
+  if current == n
+    break
+  end
+  h[current].keys.each do |i|
+    visited[current] ||= {}
+    unless visited[current][i]
+      q.push([current, i])
+    end
+  end
 end
 
-n,x,y = gets.split.map(&:to_i)
-
-wf = WarshallFloyd.new(n)
-
-(1..n-1).each do |i|
-  wf.add_side([i, i+1], 1)
+ans = {}
+(n-1).times do |i|
+  i += 1
+  h[i].each do |key, val|
+    ans[val] ||= 0
+    ans[val] += 1
+  end
 end
 
-wf.add_side([x,y],1)
-
-wf.calc_shortest_paths
-p wf
+(n-1).times do |i|
+  puts ans[i+1] || 0
+end
