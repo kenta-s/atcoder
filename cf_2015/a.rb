@@ -8,7 +8,7 @@ end
 ss.sort!.reverse!
 sum1 = ss.first(k).sum
 
-if sum1 >= r
+if sum1 / k >= r
   puts 0
   exit
 end
