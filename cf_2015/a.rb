@@ -6,6 +6,13 @@ ss = []
 end
 
 ss.sort!.reverse!
+sum1 = ss.first(k).sum
+
+if sum1 >= r
+  puts 0
+  exit
+end
+
 sum = ss.first(k-1).sum
 
 x = (k*r) - sum
